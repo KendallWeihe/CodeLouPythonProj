@@ -17,18 +17,34 @@ NOTE: There was a minor hours rollback at some point since the CSV was created. 
 Python3, Anaconda, Pandas, Numpy, Matplotlib, bokeh, and itertools.  These should be standard on a Python3 install.
 
 The imports are as follows:
+
 import re
+
 import requests
+
 from math import pi
+
 from itertools import chain
+
 from collections import namedtuple
+
 from bokeh.io import show, output_notebook
+
 from bokeh.plotting import figure, output_file, show
+
 from bokeh.models import HoverTool, FuncTickFormatter, FixedTicker, ColumnDataSource
+
 import pandas as pd
+
 import numpy as np
+
 import matplotlib.pyplot as plt
+
 from collections import OrderedDict
+
 from pandas import DataFrame
+
 from collections import Counter
+
 from operator import itemgetter
+
