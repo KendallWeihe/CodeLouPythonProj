@@ -18,6 +18,7 @@ from operator import itemgetter
 token = ''
 header = headers = {'Authorization': f'Bearer {token}','Content-type': 'application/json'}
 
+
 steam_hours = requests.get('https://query.data.world/s/5cOVc-nvDK4DkUJ2MFZuAqCcAqTJrN', 
                              headers=headers)
 raw_data = steam_hours.text
@@ -103,12 +104,12 @@ def make_autopct(values):
     def my_autopct(pct):
         total = sum(final_dict.keys())
         val = int(round(pct*total/100.0))
-        return '{p:.2f}%  ({v:d})'.format(p=pct,v=val)
+        return '{p:.01f}%  ({v:d})'.format(p=pct,v=val)
     return my_autopct
     
 cols= ['r','y','g','b','c','#FB00FF','m','#FFA8A8','#9FFFA6', '#D7FFF7']
 plt.pie(final_dict.keys(), labels=final_dict.values(), colors=cols, autopct=make_autopct(final_dict.keys),  pctdistance=.5, labeldistance=1)
-plt.title('TOP 10 STEAM GAMES BY HOURS PLAYED ' '\n' 'Piechart displayed based on overall percentage' '\n' 'Data accurate as of 2/12/2018')
+plt.title('TOP 10 STEAM GAMES BY HOURS PLAYED ' '\n' 'Piechart displayed based on overall percentage' '\n' 'Rounded with Autopct to equal 100%' '\n' 'Data accurate as of 2/12/2018')
 plt.xticks(rotation=15, fontsize=5)
 plt.legend()
 plt.show()
