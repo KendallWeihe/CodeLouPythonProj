@@ -16,7 +16,7 @@ NOTE: There was a minor hours rollback at some point since the CSV was created. 
 
 Python3, Anaconda, Pandas, Numpy, Matplotlib, bokeh, and itertools.  These should be standard on a Python3 install.
 
-The SQLITE database generates automatically via the program, however I have included it in the repository in case any issues arise with the pull.
+The SQLITE database generates automatically via the Python script, however I have included it in the repository in case any issues arise with the pull.
 
 For installs see:
 https://github.com/RossEpsteinKY/CodeLouPythonProj/blob/master/requirements.txt
