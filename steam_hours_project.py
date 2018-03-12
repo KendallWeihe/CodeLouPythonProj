@@ -15,6 +15,8 @@ from pandas import DataFrame
 from collections import Counter
 from operator import itemgetter
 
+
+
 token = ''
 header = headers = {'Authorization': f'Bearer {token}','Content-type': 'application/json'}
 
@@ -24,13 +26,24 @@ steam_hours = requests.get('https://query.data.world/s/5cOVc-nvDK4DkUJ2MFZuAqCcA
 raw_data = steam_hours.text
 
 steam_list = raw_data.split('\r\n')
-#print(steam_list)
+print("Steam List")
+print(steam_list)
 steam_list[2]
 
 game_hours = [r.split('|')[-1] for r in steam_list[1:]]
 game_name = [r.split('|')[0] for r in steam_list[1:]]
 
+print("game hours")
+print(game_hours)
+
+print("game name")
+print(game_name)
+
 game_hours_edit = [i.replace('"', '') for i in game_hours]
+
+print("Game edited hours")
+print(game_hours_edit)
+
 
 def remove_comma(s):
     return s[1:]
