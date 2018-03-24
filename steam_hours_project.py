@@ -15,7 +15,7 @@ from pandas import DataFrame
 from collections import Counter
 from operator import itemgetter
 
-
+#IMPORT THE CSV
 
 token = ''
 header = headers = {'Authorization': f'Bearer {token}','Content-type': 'application/json'}
@@ -25,10 +25,13 @@ steam_hours = requests.get('https://query.data.world/s/5cOVc-nvDK4DkUJ2MFZuAqCcA
                              headers=headers)
 raw_data = steam_hours.text
 
+
+#SPLIT DATA
 steam_list = raw_data.split('\r\n')
 print("Steam List")
 print(steam_list)
 steam_list[2]
+
 
 game_hours = [r.split('|')[-1] for r in steam_list[1:]]
 game_name = [r.split('|')[0] for r in steam_list[1:]]
@@ -44,7 +47,7 @@ game_hours_edit = [i.replace('"', '') for i in game_hours]
 print("Game edited hours")
 print(game_hours_edit)
 
-
+#REMOVE COMMAS
 def remove_comma(s):
     return s[1:]
 
@@ -68,23 +71,30 @@ for key, value in games_dict.items():
     print(key, value)
 print('\n')
 
+
+#SCRUB DATA
 scrubbed = [re.sub(r'[^\x00-\x7F]+',' ', game_hours) for game_hours in game_hours]
 #print(f"Game Name: {game_name}\n Hours Played: {scrubbed}")
 
+
+#CREATE DATABASE
 conn = sqlite3.connect('steam_hours.db')
 cur = conn.cursor() 
 cur.execute('''drop table IF EXISTS name_game''')
 cur.execute('''CREATE TABLE IF NOT EXISTS name_game (game_name TEXT, game_hours TEXT)''')
 
+#PLACE ITEMS INTO DATABASE
 for key, value in games_dict.items():
     #print(game_name)
     #print(game_hours)
     cur.execute('INSERT OR REPLACE INTO name_game VALUES (?, ?)', (key, value,))
     conn.commit()
 
+#GET ITEMS FROM DATABASE WITH SQL QUERY
 name_results = cur.execute('SELECT game_name FROM name_game LIMIT 10;').fetchall()
 hours_results = cur.execute('SELECT game_hours FROM name_game LIMIT 10;').fetchall()
 
+#FLATTEN THE DATA
 list_int = hours_results
 
 names_flat = [item for sublist in name_results for item in sublist]
@@ -99,6 +109,7 @@ print(list_int)
 
 from collections import OrderedDict
 
+#PLACE INTO AN ORDERED DICT
 final_dict = OrderedDict(zip(list_int, names_flat))
 
 print("final dict")
@@ -112,6 +123,7 @@ for key, value in final_dict.items():
 print('\n')
 
 
+#SETUP PIE CHART DATA AND PRINT IT
 
 def make_autopct(values):
     def my_autopct(pct):
